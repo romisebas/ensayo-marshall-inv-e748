@@ -200,6 +200,22 @@ svg text{font-family:var(--read)}
 .count b{color:var(--heat);font-size:1.1rem}
 @media (max-width:1000px){.bench{grid-template-columns:1fr}.bench-3d{border-right:0;border-bottom:1px solid var(--asphalt-3);min-height:300px}}
 
+/* marshall design curves */
+.h-dots{--hatch:radial-gradient(circle,var(--agg-2) 2px,transparent 2.4px) 0 0/8px 8px,var(--asphalt-3)}
+.curves-ctl{position:sticky;top:12px;z-index:5;background:var(--asphalt);color:var(--bone);border-radius:12px;padding:14px 16px;margin:18px 0 14px;box-shadow:0 12px 30px -16px rgba(0,0,0,.5)}
+.curves-ctl label{display:flex;justify-content:space-between;font-size:.84rem;color:var(--bone-2);margin-bottom:6px}
+.curves-ctl input{width:100%;accent-color:var(--heat)}
+.curves-ctl p{margin:8px 0 0;font-size:.93rem;line-height:1.5;min-height:3em}
+.curves-ctl p b{color:var(--heat)}
+.curves{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px}
+.curve{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px 14px 12px}
+.curve h3{margin:0 0 2px;font-size:1.2rem}
+.curve .trend{font-family:var(--mono);font-size:.76rem;color:var(--heat-ink);display:block;margin-bottom:4px}
+.curve svg{display:block;width:100%;height:auto;margin:4px 0 6px}
+.curve p{font-size:.9rem;line-height:1.5;margin:0;color:var(--ink-2)}
+@media (max-width:1000px){.curves-ctl{top:60px}}
+@media (max-width:640px){.curves{grid-template-columns:1fr}}
+
 /* calculator */
 .calc{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;align-items:end;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:18px;margin:18px 0}
 .calc label{display:block;font-size:.84rem;color:var(--ink-2);margin-bottom:6px}
@@ -289,7 +305,7 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
 
 <div class="body">
   <nav class="rail" aria-label="Secciones">
-    <p class="rail-title"><span>Columna del núcleo</span><span>9 capas</span></p>
+    <p class="rail-title"><span>Columna del núcleo</span><span>10 capas</span></p>
     <ol class="core" id="core">
       <li style="--h:1.1"><a href="#objetivo" class="h-asf"><span class="n">1</span>Qué mide</a></li>
       <li style="--h:.9"><a href="#equipo" class="h-diag"><span class="n">2</span>Equipo</a></li>
@@ -297,9 +313,10 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
       <li style="--h:.8"><a href="#reposo" class="h-horz"><span class="n">4</span>Reposo y medidas</a></li>
       <li style="--h:1.6"><a href="#martes" class="h-cross"><span class="n">5</span>Martes: fallar</a></li>
       <li style="--h:1.1"><a href="#calculos" class="h-fine"><span class="n">6</span>Cálculos</a></li>
-      <li style="--h:.8"><a href="#informe" class="h-rdiag"><span class="n">7</span>Informe</a></li>
-      <li style="--h:.8"><a href="#precision" class="h-vert"><span class="n">8</span>Precisión</a></li>
-      <li style="--h:.9"><a href="#repaso" class="h-sand"><span class="n">9</span>Para el quiz</a></li>
+      <li style="--h:1.4"><a href="#graficos" class="h-dots"><span class="n">7</span>Gráficos Marshall</a></li>
+      <li style="--h:.8"><a href="#informe" class="h-rdiag"><span class="n">8</span>Informe</a></li>
+      <li style="--h:.8"><a href="#precision" class="h-vert"><span class="n">9</span>Precisión</a></li>
+      <li style="--h:.9"><a href="#repaso" class="h-sand"><span class="n">10</span>Para el quiz</a></li>
     </ol>
     <p class="rail-legend"><svg width="12" height="15" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1v18" stroke="currentColor" stroke-width="2"/><path d="M3 2h11l-3 4 3 4H3z" fill="#e8590c"/></svg>la bandera marca dónde quedaste</p>
   </nav>
@@ -323,25 +340,7 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
 
       <h3>Cómo sale el contenido óptimo</h3>
       <p>Para cada gradación se hacen probetas con varios contenidos de asfalto, separados <span class="mono">0.5 %</span> en masa de la mezcla, con mínimo 3 probetas por contenido. Un diseño de 6 contenidos pide al menos 18 probetas: unos 23 kg de agregado y 4 L de asfalto. Luego se grafican estabilidad, flujo, densidad, vacíos con aire y vacíos llenos de asfalto contra el porcentaje de ligante. En mezclas densas la estabilidad suele tener un pico dentro del rango ensayado.</p>
-      <figure>
-        <svg viewBox="0 0 640 250" role="img" aria-label="Forma típica de las curvas de estabilidad y de vacíos contra el contenido de asfalto">
-          <g font-size="12" fill="var(--ink-2)">
-            <line x1="44" y1="200" x2="300" y2="200" stroke="var(--rule)" stroke-width="1.5"/><line x1="44" y1="30" x2="44" y2="200" stroke="var(--rule)" stroke-width="1.5"/>
-            <path d="M60 165 Q 160 50 290 150" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
-            <g fill="var(--ink)"><circle cx="60" cy="165" r="4"/><circle cx="106" cy="118" r="4"/><circle cx="152" cy="98" r="4"/><circle cx="198" cy="100" r="4"/><circle cx="244" cy="118" r="4"/><circle cx="290" cy="150" r="4"/></g>
-            <line x1="168" y1="96" x2="168" y2="200" stroke="var(--heat)" stroke-dasharray="4 4"/>
-            <text x="172" y="88" fill="var(--heat-ink)">pico</text>
-            <text x="172" y="228" text-anchor="middle">% de asfalto</text>
-            <text x="44" y="20">Estabilidad</text>
-            <line x1="364" y1="200" x2="620" y2="200" stroke="var(--rule)" stroke-width="1.5"/><line x1="364" y1="30" x2="364" y2="200" stroke="var(--rule)" stroke-width="1.5"/>
-            <path d="M380 55 Q 480 150 610 180" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
-            <g fill="var(--ink)"><circle cx="380" cy="55" r="4"/><circle cx="426" cy="94" r="4"/><circle cx="472" cy="124" r="4"/><circle cx="518" cy="146" r="4"/><circle cx="564" cy="164" r="4"/><circle cx="610" cy="180" r="4"/></g>
-            <text x="492" y="228" text-anchor="middle">% de asfalto</text>
-            <text x="364" y="20">Vacíos con aire</text>
-          </g>
-        </svg>
-        <figcaption>Forma típica, sin valores. Cada punto es el promedio de 3 probetas. El óptimo se escoge con los criterios del artículo de las Especificaciones INVIAS para esa mezcla, no con los del manual MS-2 (Anexo A).</figcaption>
-      </figure>
+      <p>Las seis curvas y qué significa cada una están en <a href="#graficos">Gráficos Marshall</a>.</p>
     </section>
 
     <section id="equipo" class="h-diag">
@@ -495,6 +494,27 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
         <summary>Tabla 748-1 completa</summary>
         <div class="tw"><table id="ftable"><thead><tr><th>Volumen (cm³)</th><th>Espesor (mm)</th><th>Espesor (pg)</th><th>Factor</th></tr></thead><tbody></tbody></table></div>
       </details>
+    </section>
+
+    <section id="graficos" class="h-dots">
+      <div class="opener"><div class="band"></div><h2>Gráficos Marshall</h2><p>Las curvas del diseño de la mezcla. El Anexo A remite al manual MS-2 del Asphalt Institute.</p></div>
+      <p>Para cada contenido de asfalto se promedian las 3 probetas y se grafican seis propiedades contra el porcentaje de asfalto. Las formas casi siempre son las mismas, y entender por qué ayuda a detectar un error de laboratorio cuando una curva sale rara.</p>
+      <div class="curves-ctl">
+        <label for="pa"><span>Contenido de asfalto</span><span id="paZone">cerca del óptimo</span></label>
+        <input type="range" id="pa" min="0" max="1" step="0.005" value="0.5" aria-describedby="paText">
+        <p id="paText" aria-live="polite"></p>
+      </div>
+      <div class="curves">
+        <div class="curve"><h3>Estabilidad</h3><span class="trend">sube, pico, baja</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de Estabilidad contra el contenido de asfalto" data-curve="estab"></svg><p>Al principio el asfalto une los agregados y la mezcla gana resistencia. Pasado el pico, el asfalto que sobra los separa y actúa como lubricante. El pico suele llegar antes que el de la densidad.</p></div>
+        <div class="curve"><h3>Flujo</h3><span class="trend">sube siempre</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de Flujo contra el contenido de asfalto" data-curve="flujo"></svg><p>Con más asfalto la mezcla es más plástica y se deforma más antes de fallar. Un flujo muy bajo indica una mezcla rígida que tiende a agrietarse; uno muy alto, una mezcla que se ahuella.</p></div>
+        <div class="curve"><h3>Densidad (Gmb)</h3><span class="trend">sube, pico, baja</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de Densidad (Gmb) contra el contenido de asfalto" data-curve="dens"></svg><p>El asfalto ayuda a acomodar el agregado al compactar y llena huecos, así que la densidad sube. Después empieza a reemplazar agregado, que pesa más, y la densidad baja.</p></div>
+        <div class="curve"><h3>Vacíos con aire (Va)</h3><span class="trend">baja siempre</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de Vacíos con aire (Va) contra el contenido de asfalto" data-curve="va"></svg><p>El asfalto ocupa el espacio que tenía el aire. Muchos vacíos: mezcla permeable que se oxida rápido. Muy pocos: exudación y ahuellamiento. Es la curva que más pesa al escoger el óptimo.</p></div>
+        <div class="curve"><h3>VMA</h3><span class="trend">baja, mínimo, sube</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de VMA contra el contenido de asfalto" data-curve="vma"></svg><p>Vacíos en el agregado mineral: todo el espacio entre agregados, sea aire o asfalto. Forma una U. Del lado derecho del mínimo, el asfalto ya está separando el agregado, así que conviene quedar en el mínimo o un poco a su izquierda.</p></div>
+        <div class="curve"><h3>Vacíos llenos de asfalto (VFA)</h3><span class="trend">sube siempre</span><svg viewBox="0 0 260 130" role="img" aria-label="Forma típica de Vacíos llenos de asfalto (VFA) contra el contenido de asfalto" data-curve="vfa"></svg><p>Qué parte del VMA ocupa el asfalto: VFA = 100 × (VMA − Va) / VMA. Bajo, la película de asfalto es delgada y la mezcla dura poco. Alto, hay riesgo de exudación.</p></div>
+      </div>
+      <h3>Cómo se escoge el óptimo</h3>
+      <p>Lo usual es partir del contenido de asfalto que da los vacíos con aire buscados y luego revisar, en las demás curvas, que estabilidad, flujo, VMA y VFA cumplan sus límites con ese mismo contenido. Los valores de esos límites no están en la INV E-748: los fija el artículo de las Especificaciones Generales de INVIAS que aplique a la mezcla, según el tránsito.</p>
+      <p class="note">Las curvas son formas típicas, sin valores. Las explicaciones son de diseño de mezclas en general, no texto de la INV E-748. La norma pide graficar estabilidad, flujo, densidad, vacíos con aire y vacíos llenos de asfalto (numeral 3.2); el VMA viene del método del MS-2.</p>
     </section>
 
     <section id="informe" class="h-rdiag">
@@ -667,6 +687,47 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
     window.__benchTab?.(t.dataset.tab);
   }));
   document.querySelectorAll('#bench [data-act]').forEach(b => b.addEventListener('click', () => window.__benchAct?.(b.dataset.act, b)));
+})();
+
+// ---------- Marshall design curves (typical shapes, no values) ----------
+(() => {
+  const F = {
+    estab: x => 0.92 - 1.5 * (x - 0.45) ** 2,
+    flujo: x => 0.18 + 0.68 * x ** 1.5,
+    dens: x => 0.9 - 1.1 * (x - 0.62) ** 2,
+    va: x => 0.07 + 0.83 * Math.exp(-2.4 * x),
+    vma: x => 0.38 + 1.3 * (x - 0.5) ** 2,
+    vfa: x => 0.12 + 0.82 * (1 - Math.exp(-2.6 * x)),
+  };
+  const L = 18, Rr = 250, T = 10, B = 112;
+  const X = x => L + x * (Rr - L), Y = y => B - y * (B - T);
+  const NS = 'http://www.w3.org/2000/svg';
+  const cursors = [];
+  document.querySelectorAll('svg[data-curve]').forEach(svg => {
+    const f = F[svg.dataset.curve];
+    let d = '';
+    for (let x = 0; x <= 1.0001; x += 0.02) d += (d ? 'L' : 'M') + X(x).toFixed(1) + ' ' + Y(f(x)).toFixed(1);
+    const pts = [0, 0.2, 0.4, 0.6, 0.8, 1].map(x => `<circle cx="${X(x)}" cy="${Y(f(x))}" r="3.2" fill="var(--ink)"/>`).join('');
+    svg.innerHTML = `<line x1="${L}" y1="${B}" x2="${Rr}" y2="${B}" stroke="var(--rule)" stroke-width="1.5"/><line x1="${L}" y1="${T}" x2="${L}" y2="${B}" stroke="var(--rule)" stroke-width="1.5"/>` +
+      `<text x="${Rr}" y="126" text-anchor="end" font-size="10" fill="var(--ink-2)">% de asfalto</text>` +
+      `<path d="${d}" fill="none" stroke="var(--ink)" stroke-width="2.2"/>${pts}` +
+      `<line class="cur" y1="${T}" y2="${B}" stroke="var(--heat)" stroke-width="1.5" stroke-dasharray="4 3"/><circle class="dot" r="5" fill="var(--heat)" stroke="var(--paper)" stroke-width="2"/>`;
+    cursors.push({ f, line: svg.querySelector('.cur'), dot: svg.querySelector('.dot') });
+  });
+  const ZONES = [
+    ['poco asfalto', '<b>Poco asfalto.</b> La mezcla queda seca y con muchos vacíos: permeable, se oxida rápido y el agregado se puede desprender. La estabilidad todavía no llega a su pico y el flujo es bajo, así que es rígida.'],
+    ['cerca del óptimo', '<b>Cerca del óptimo.</b> Estabilidad y densidad rondan su máximo, los vacíos con aire están en la zona buscada y el VMA cerca de su mínimo. Aquí suele caer el contenido de diseño.'],
+    ['exceso de asfalto', '<b>Exceso de asfalto.</b> El asfalto sobra y separa los agregados en vez de unirlos. La estabilidad baja, el flujo sube, los vacíos casi desaparecen y el VFA se dispara. En la vía eso es exudación y ahuellamiento.'],
+  ];
+  const pa = document.getElementById('pa'), zone = document.getElementById('paZone'), text = document.getElementById('paText');
+  let last = -1;
+  const move = () => {
+    const x = +pa.value;
+    cursors.forEach(c => { c.line.setAttribute('x1', X(x)); c.line.setAttribute('x2', X(x)); c.dot.setAttribute('cx', X(x)); c.dot.setAttribute('cy', Y(c.f(x))); });
+    const z = x < 0.33 ? 0 : x <= 0.67 ? 1 : 2;
+    if (z !== last) { zone.textContent = ZONES[z][0]; text.innerHTML = ZONES[z][1]; last = z; }
+  };
+  pa.addEventListener('input', move); move();
 })();
 </script>
 
