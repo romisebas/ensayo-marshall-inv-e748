@@ -167,6 +167,39 @@ svg text{font-family:var(--read)}
 .sim-status{padding:0 16px 14px;font-size:.88rem;color:var(--bone-2);min-height:2.4em}
 .sim-status b{color:var(--heat)}
 
+/* video tips + bench */
+.tip{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start;font-size:.92rem;line-height:1.5;color:var(--ink-2);background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:9px 12px;margin:8px 0 4px}
+.tip svg{margin-top:2px}
+.tip strong{color:var(--ink)}
+.why{font-size:1.12rem;line-height:1.55}
+.video{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--asphalt);margin:20px 0 6px}
+.video button{position:absolute;inset:0;width:100%;border:0;background:var(--asphalt);color:var(--bone);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font:600 1rem var(--read)}
+.video button span{font-size:.85rem;color:var(--bone-2);font-weight:400}
+.video button svg{transition:transform 160ms var(--ease-out)}
+.video button:active svg{transform:scale(.94)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bench{background:var(--asphalt);color:var(--bone);border-radius:14px;overflow:hidden;margin:20px 0 10px;display:grid;grid-template-columns:1.3fr 1fr;box-shadow:0 18px 40px -20px rgba(0,0,0,.55)}
+.bench-3d{position:relative;min-height:380px;border-right:1px solid var(--asphalt-3)}
+.bench-3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;cursor:grab}
+.bench-side{padding:16px 18px 18px;display:flex;flex-direction:column}
+.bench-side>div[data-panel]{display:flex;flex-direction:column;flex:1}
+.bench-side>div[hidden]{display:none}
+.tabs{display:flex;gap:4px;background:var(--asphalt-2);border-radius:999px;padding:4px;margin-bottom:16px}
+.tabs button{flex:1;border:0;background:none;color:var(--bone-2);font:600 .86rem var(--read);padding:8px 6px;border-radius:999px;cursor:pointer;transition:background-color 180ms ease,color 180ms ease}
+.tabs button[aria-selected="true"]{background:var(--bone);color:var(--asphalt)}
+.bench-side h4{font-family:var(--display);font-stretch:80%;font-size:1.5rem;margin:0 0 6px;line-height:1.05}
+.bench-side p{font-size:.95rem;color:var(--bone);margin:0 0 10px}
+.bench-side dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.86rem;margin:4px 0 14px}
+.bench-side dt{color:var(--bone-2)}
+.bench-side dd{margin:0;font-family:var(--mono);font-size:.84rem}
+.bench-act{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bench-act .btn{background:var(--heat);color:var(--asphalt)}
+.bench-act .btn.ghost{background:none;color:var(--bone);border:1px solid var(--asphalt-3)}
+.bench-act .btn:disabled{opacity:.5;cursor:default}
+.count{font:600 .9rem var(--mono);color:var(--bone-2);width:100%;margin:0 0 6px!important}
+.count b{color:var(--heat);font-size:1.1rem}
+@media (max-width:1000px){.bench{grid-template-columns:1fr}.bench-3d{border-right:0;border-bottom:1px solid var(--asphalt-3);min-height:300px}}
+
 /* calculator */
 .calc{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;align-items:end;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:18px;margin:18px 0}
 .calc label{display:block;font-size:.84rem;color:var(--ink-2);margin-bottom:6px}
@@ -275,12 +308,18 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
 
     <section id="objetivo" class="h-asf">
       <div class="opener"><div class="band"></div><h2>Qué mide el ensayo</h2><p>Numerales 1 a 3 de la norma.</p></div>
+      <p class="why">Antes de construir una carretera o una pista hay que diseñar la mezcla asfáltica del pavimento. Tiene que aguantar cargas repetidas sin deformarse de más, no hacer surcos cuando hace calor y resistir el daño por humedad. El Marshall es una de las pruebas con que se revisa eso.</p>
       <p>El ensayo Marshall mide la resistencia de una mezcla asfáltica a la deformación plástica. Se fabrican probetas cilíndricas de 102 mm (4") de diámetro y 63.5 mm (2½") de altura, se llevan a 60 °C y se cargan por el costado, perpendicular a su eje, hasta que fallan.</p>
       <div class="pair">
         <div class="def"><h3>Estabilidad</h3><span class="u">N o lbf · se reporta a 50 N</span><p>La carga máxima que soporta la probeta. Dice qué tanto resiste la mezcla a deformarse bajo el tráfico.</p></div>
         <div class="def"><h3>Flujo</h3><span class="u">mm o 0.01" · 0.12" se escribe 12</span><p>Cuánto se deformó la probeta en el instante de la falla.</p></div>
       </div>
       <p>Sirve para dos cosas: diseñar la mezcla en el laboratorio, buscando el contenido óptimo de asfalto, y controlar en obra la mezcla que sale de planta. Solo aplica a mezclas con cemento asfáltico y agregado de tamaño máximo de 25.4 mm (1") o menos. Con las mismas probetas se hacen después densidad, vacíos, tracción indirecta, fatiga, creep y módulo resiliente.</p>
+
+      <h3>Si prefieres verlo primero</h3>
+      <p>Este video de 8 minutos recorre el equipo y el procedimiento. Las notas "Del video" de esta guía salen de ahí.</p>
+      <div class="video" id="video"><button type="button" aria-label="Cargar el video Ensayo Marshall"><svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="#e8590c"/><path d="M26 20v24l19-12z" fill="#1c1b19"/></svg>Ensayo Marshall<span>Romer Daniel Oyola Guzmán · 8:33 · YouTube</span></button></div>
+      <p class="note">El video no sigue la INV E-748 al pie de la letra. Las diferencias están en <a href="#video-norma">Video contra norma</a>.</p>
 
       <h3>Cómo sale el contenido óptimo</h3>
       <p>Para cada gradación se hacen probetas con varios contenidos de asfalto, separados <span class="mono">0.5 %</span> en masa de la mezcla, con mínimo 3 probetas por contenido. Un diseño de 6 contenidos pide al menos 18 probetas: unos 23 kg de agregado y 4 L de asfalto. Luego se grafican estabilidad, flujo, densidad, vacíos con aire y vacíos llenos de asfalto contra el porcentaje de ligante. En mezclas densas la estabilidad suele tener un pico dentro del rango ensayado.</p>
@@ -322,6 +361,37 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
         <tr><td>Varios</td><td>Horno o placa con control de ± 3 °C, bandejas, recipientes con tapa, palustres, termómetros de 10 a 200 °C, balanza de 2 kg legible a 0.1 g, tamices, guantes y crayolas.</td></tr>
         </tbody>
       </table></div>
+      <h3>Recorrido por el equipo</h3>
+      <p>Toca cada pieza para verla y moverla. Puedes girar el modelo arrastrando.</p>
+      <div class="bench" id="bench">
+        <div class="bench-3d" id="bench3d" aria-label="Modelo 3D del equipo seleccionado"></div>
+        <div class="bench-side">
+          <div class="tabs" role="tablist" aria-label="Pieza del equipo">
+            <button role="tab" aria-selected="true" data-tab="molde" type="button">Molde</button>
+            <button role="tab" aria-selected="false" data-tab="martillo" type="button">Martillo</button>
+            <button role="tab" aria-selected="false" data-tab="mordazas" type="button">Mordazas</button>
+          </div>
+          <div data-panel="molde" role="tabpanel">
+            <h4>Molde, collar y placa</h4>
+            <p>Un cilindro de acero que se arma con tres piezas. El collar de extensión va arriba y deja meter toda la mezcla suelta. La placa de base cierra el fondo. Para compactar la segunda cara, placa y collar se cambian de extremo.</p>
+            <dl><dt>Diámetro interior</dt><dd>~101.6 mm (4")</dd><dt>Mezcla por probeta</dt><dd>~1200 g</dd><dt>Temperatura</dt><dd>90–150 °C antes de usar</dd></dl>
+            <div class="bench-act"><button class="btn" type="button" data-act="explode">Desarmar</button></div>
+          </div>
+          <div data-panel="martillo" role="tabpanel" hidden>
+            <h4>Martillo de compactación</h4>
+            <p>Una masa se sube por la varilla y se deja caer sobre el pisón. Cada caída es un golpe. Se dan los golpes especificados, se voltea el molde y se repite en la otra cara.</p>
+            <dl><dt>Masa</dt><dd>4.54 kg (10 lb)</dd><dt>Caída</dt><dd>457.2 mm (18")</dd><dt>Golpes por cara</dt><dd>los especificados (aquí 75)</dd></dl>
+            <div class="bench-act"><p class="count" id="count" aria-live="polite">Cara 1 · golpe <b>0</b> de 75</p><button class="btn" type="button" data-act="blow">Dar un golpe</button><button class="btn ghost" type="button" data-act="auto">Compactar todo</button></div>
+          </div>
+          <div data-panel="mordazas" role="tabpanel" hidden>
+            <h4>Mordazas</h4>
+            <p>Dos medias cañas que abrazan la probeta acostada. La de abajo queda fija y la de arriba baja guiada por dos varillas. La carga del pistón entra por una esfera, así llega centrada.</p>
+            <dl><dt>Radio interior</dt><dd>~51 mm</dd><dt>Temperatura</dt><dd>20–40 °C al ensayar</dd><dt>Guías</dt><dd>limpias y lubricadas</dd></dl>
+            <div class="bench-act"><button class="btn" type="button" data-act="open">Abrir</button></div>
+          </div>
+        </div>
+      </div>
+      <p class="note">"Compactar todo" va 4 veces más rápido que un martillo mecánico (64 golpes por minuto). 75 golpes es lo típico; el número lo fija la especificación.</p>
     </section>
 
     <section id="sabado" class="h-grav">
@@ -348,9 +418,9 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Calentar</h4><p>Agregados al horno o la placa por encima de la temperatura de mezcla, máximo <span class="heat">28 °C</span> más. Asfalto en recipiente con tapa. Sobre la placa, una placa desviadora o arena para que no haya puntos sobrecalentados.</p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Mezclar</h4><p>Agregados al recipiente y unos 5 s en seco. Cráter en el centro, se vierte el asfalto pesado y se mezcla rápido hasta que todo quede cubierto: máximo <span class="mono">60 s</span> para una probeta, <span class="mono">120 s</span> para una bachada de varias. Sin perder material.</p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Curar</h4><p>Cada porción en recipiente metálico cerrado, horno ventilado a <span class="heat">8–11 °C</span> sobre la temperatura de compactación, de <span class="mono">1 a 2 h</span>. Una bachada múltiple se mezcla a mano y se cuartea antes.</p></div></li>
-        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Preparar el molde</h4><p>Molde, collar, placa y base del martillo limpios y a <span class="heat">90–150 °C</span>. Se arma y se pone papel filtro en el fondo.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Preparar el molde</h4><p>Molde, collar, placa y base del martillo limpios y a <span class="heat">90–150 °C</span>. Se arma y se pone papel filtro en el fondo.</p><p class="tip"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="3" width="18" height="14" rx="4" fill="var(--ink)"/><path d="M8 7v6l5-3z" fill="var(--stone)"/></svg><span><strong>Del video:</strong> untan aceite en las paredes del molde para que la probeta salga fácil. La norma no lo menciona; pregunten si en su laboratorio se hace.</span></p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Vaciar y chuzar</h4><p>Toda la mezcla al molde. Con espátula caliente: <span class="mono">15</span> golpes por el perímetro y <span class="mono">10</span> en el centro. Papel filtro encima. Verificar que esté en el rango de compactación.</p></div></li>
-        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Compactar la primera cara</h4><p>Molde en el sujetador sobre el pedestal y el número de golpes especificado. Martillo manual vertical, limpio y un poco aceitado.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Compactar la primera cara</h4><p>Molde en el sujetador sobre el pedestal y el número de golpes especificado. Martillo manual vertical, limpio y un poco aceitado.</p><p class="tip"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="3" width="18" height="14" rx="4" fill="var(--ink)"/><path d="M8 7v6l5-3z" fill="var(--stone)"/></svg><span><strong>Del video:</strong> usan 75 golpes por cara, que es lo típico. Míralo en el <a href="#bench">recorrido por el equipo</a>.</span></p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Voltear y compactar la segunda</h4><p>Placa y collar a los extremos opuestos, molde invertido y los mismos golpes.</p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Enfriar y extraer</h4><p>Enfriar hasta que no se dañe al sacarla: ventilador, o molde en agua fría dentro de una bolsa. Extractor, marca con crayola y reposo de una noche en superficie plana.</p></div></li>
       </ol>
@@ -377,8 +447,8 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
       <ol class="steps" data-group="mar">
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Calentar a 60 °C</h4><p>Baño de agua a <span class="heat">60 ± 1 °C</span> durante <span class="mono">30–40 min</span>, o horno a 60 °C durante <span class="mono">120–130 min</span>. Una probeta falsa con termocupla sirve para vigilar la temperatura.</p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Preparar las mordazas</h4><p>Barras guía e interior de las mordazas bien limpios, y guías lubricadas para que la mordaza superior deslice libre. Mordazas entre <span class="heat">20 y 40 °C</span>; si se calentaron en agua, secarlas por dentro.</p></div></li>
-        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Montar</h4><p>Sacar una probeta, secar el exceso de agua con toalla y centrarla en la mordaza inferior. Mordaza superior, todo centrado en la prensa, medidor de flujo en su sitio y en cero, con el vástago firme contra la mordaza superior.</p></div></li>
-        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Cargar hasta la falla</h4><p>A <span class="mono">50 ± 5 mm/min</span> hasta que la carga llegue al máximo y empiece a bajar. Desde que sale del baño hasta que falla: máximo <span class="heat">30 s</span>. Mejor dos personas, una en el anillo y otra en el deformímetro.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Montar</h4><p>Sacar una probeta, secar el exceso de agua con toalla y centrarla en la mordaza inferior. Mordaza superior, todo centrado en la prensa, medidor de flujo en su sitio y en cero, con el vástago firme contra la mordaza superior.</p><p class="tip"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="3" width="18" height="14" rx="4" fill="var(--ink)"/><path d="M8 7v6l5-3z" fill="var(--stone)"/></svg><span><strong>Del video:</strong> entre el pistón y la mordaza va una esfera, y las piezas deben quedar apenas en contacto. Antes de cargar, todos los diales en cero.</span></p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Cargar hasta la falla</h4><p>A <span class="mono">50 ± 5 mm/min</span> hasta que la carga llegue al máximo y empiece a bajar. Desde que sale del baño hasta que falla: máximo <span class="heat">30 s</span>. Mejor dos personas, una en el anillo y otra en el deformímetro.</p><p class="tip"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><rect x="1" y="3" width="18" height="14" rx="4" fill="var(--ink)"/><path d="M8 7v6l5-3z" fill="var(--stone)"/></svg><span><strong>Del video:</strong> cómo saber que falló: la aguja del anillo deja de subir y se devuelve. La lectura máxima es la estabilidad, y la deformación en ese momento es el flujo.</span></p></div></li>
         <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Leer y repetir</h4><p>Método A: el flujo es la lectura del deformímetro en la falla y la estabilidad la carga máxima. Método B: se lee en la curva, como en el simulador. Se repite con cada probeta.</p></div></li>
       </ol>
       <div class="steps-tools"><span data-count="mar"></span><button class="btn ghost" type="button" data-reset="mar">Borrar marcas</button></div>
@@ -463,6 +533,21 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
         <li>El diseño completo sigue el manual MS-2 del Asphalt Institute, salvo la elección del óptimo, que va por las Especificaciones Generales de INVIAS (Anexo A, obligatorio).</li>
         <li>Normas de referencia: ASTM D6926-10 y D6927-06. Esta versión reemplaza a la INV E-748-07.</li>
       </ul>
+      <h3 id="video-norma">Video contra norma</h3>
+      <p>El video sigue la práctica general del ensayo. Si en el quiz preguntan por la INV E-748, vale la columna de la norma.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Tema</th><th>En el video</th><th>En la INV E-748-13</th></tr></thead>
+        <tbody>
+        <tr><td>Temperatura de mezcla</td><td>175 a 190 °C</td><td>La que da 170 ± 20 cP en la curva del asfalto</td></tr>
+        <tr><td>Curado</td><td>No se menciona</td><td>1 a 2 h a 8–11 °C sobre la de compactación</td></tr>
+        <tr><td>Aceite en el molde</td><td>Se unta en las paredes</td><td>No lo menciona; solo el martillo levemente aceitado</td></tr>
+        <tr><td>Golpes por cara</td><td>75, "típicamente"</td><td>Los especificados</td></tr>
+        <tr><td>Velocidad de carga</td><td>50.8 mm/min</td><td>50 ± 5 mm/min (2"/min)</td></tr>
+        <tr><td>Baño</td><td>60 °C por 30 min</td><td>60 ± 1 °C por 30 a 40 min</td></tr>
+        <tr><td>Unidades del flujo</td><td>Centésimas de milímetro</td><td>mm o centésimas de pulgada</td></tr>
+        <tr><td>Tiempo hasta fallar</td><td>No se menciona</td><td>Máximo 30 s desde que sale del baño, y dentro de 24 h tras compactar</td></tr>
+        </tbody>
+      </table></div>
     </section>
 
   </main>
@@ -563,6 +648,26 @@ ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
   };
   h.addEventListener('input', run); p.addEventListener('input', run); run();
 })();
+
+// ---------- video (loads YouTube only on click) ----------
+(() => {
+  const box = document.getElementById('video');
+  box.querySelector('button').addEventListener('click', () => {
+    box.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/5U6EKJKehc8?autoplay=1&rel=0" title="Ensayo Marshall, video de Romer Daniel Oyola Guzmán" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+  });
+})();
+
+// ---------- equipment bench tabs ----------
+(() => {
+  const tabs = [...document.querySelectorAll('#bench [data-tab]')];
+  const panels = [...document.querySelectorAll('#bench [data-panel]')];
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.setAttribute('aria-selected', x === t));
+    panels.forEach(p => p.hidden = p.dataset.panel !== t.dataset.tab);
+    window.__benchTab?.(t.dataset.tab);
+  }));
+  document.querySelectorAll('#bench [data-act]').forEach(b => b.addEventListener('click', () => window.__benchAct?.(b.dataset.act, b)));
+})();
 </script>
 
 <script type="module">
@@ -633,6 +738,7 @@ function whenVisible(el, cb) {
 if (!canWebGL()) {
   document.getElementById('hero-nogl').style.display = 'flex';
   document.getElementById('sim3d').innerHTML = '<p style="padding:20px;color:#a9a49a">Sin 3D en este navegador. La curva funciona igual.</p>';
+  document.getElementById('bench3d').innerHTML = '<p style="padding:20px;color:#a9a49a">Sin 3D en este navegador. Las fichas de cada pieza funcionan igual.</p>';
 } else {
   // ---------- hero specimen ----------
   const el = document.getElementById('hero');
@@ -686,7 +792,8 @@ if (!canWebGL()) {
   };
   const deg = Math.PI / 180;
   const upper = jaw(14 * deg, 166 * deg), lower = jaw(194 * deg, 346 * deg);
-  const piston = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 24), steel); piston.position.y = 0.88; upper.add(piston);
+  const piston = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 24), steel); piston.position.y = 0.97; upper.add(piston);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(0.07, 24, 16), steel); ball.position.y = 0.68; upper.add(ball);
   const rodG = new THREE.CylinderGeometry(0.03, 0.03, 1.7, 16);
   [-0.78, 0.78].forEach(x => { const r = new THREE.Mesh(rodG, steel); r.position.set(x, 0.1, 0); s2.add(r); });
   const base = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.08, 0.9), steel); base.position.y = -0.72; s2.add(base);
@@ -701,6 +808,128 @@ if (!canWebGL()) {
     specG.scale.set(1 + v * 0.35, 1 - v / 1.02, 1);
     upper.position.y = -v;
   };
+
+  // ---------- equipment bench: mold, hammer, jaws ----------
+  const bEl = document.getElementById('bench3d');
+  const r3 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  r3.setPixelRatio(Math.min(devicePixelRatio, 2)); r3.toneMapping = THREE.ACESFilmicToneMapping;
+  bEl.appendChild(r3.domElement);
+  const s3 = new THREE.Scene(); lights(s3);
+  const cam3 = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  const c3 = new OrbitControls(cam3, r3.domElement);
+  c3.enableZoom = false; c3.enablePan = false; c3.enableDamping = true; c3.minPolarAngle = 0.4; c3.maxPolarAngle = 1.75;
+  const steelD = steel.clone(); steelD.side = THREE.DoubleSide;
+  const dark = new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.6, metalness: 0.2 });
+  const wood = new THREE.MeshStandardMaterial({ color: 0x7a5636, roughness: 0.85 });
+  const tube = (ri, ro, h) => new THREE.Mesh(new THREE.LatheGeometry([new THREE.Vector2(ri, 0), new THREE.Vector2(ro, 0), new THREE.Vector2(ro, h), new THREE.Vector2(ri, h), new THREE.Vector2(ri, 0)], 72), steelD);
+  const cyl = (r, h, m = steel) => new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 48), m);
+  const ease = k => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+
+  // Mold: base plate, mold body, extension collar (1 unit = 100 mm)
+  const G1 = new THREE.Group();
+  const plate1 = cyl(0.62, 0.12); const mold1 = tube(0.508, 0.57, 0.75); const collar1 = tube(0.508, 0.6, 0.45);
+  G1.add(plate1, mold1, collar1);
+  const placeMold = t => { plate1.position.y = 0.06 - 0.55 * t; mold1.position.y = 0.12; collar1.position.y = 0.87 + 0.6 * t; };
+
+  // Hammer on the compaction pedestal
+  const G2 = new THREE.Group();
+  const ped = new THREE.Mesh(new THREE.BoxGeometry(2.03, 1.6, 2.03), wood); ped.position.y = -1.05;
+  const pedPlate = new THREE.Mesh(new THREE.BoxGeometry(3.05, 0.25, 3.05), steel); pedPlate.position.y = -0.125;
+  const moldBody = new THREE.Group(); moldBody.position.y = 0.495;
+  const m2 = tube(0.508, 0.57, 0.75); m2.position.y = 0.12 - 0.495;
+  const mix = makeSpecimen(r3.capabilities.getMaxAnisotropy());
+  moldBody.add(m2, mix);
+  const plate2 = cyl(0.62, 0.12); plate2.position.y = 0.06;
+  const collar2 = tube(0.508, 0.6, 0.45); collar2.position.y = 0.87;
+  const hammer = new THREE.Group();
+  const foot = cyl(0.5, 0.12); foot.position.y = 0.06;
+  const flange = cyl(0.3, 0.08); flange.position.y = 0.79;
+  const rod = cyl(0.08, 6.78); rod.position.y = 3.51;
+  const weight = cyl(0.32, 0.9, dark);
+  const handle = cyl(0.13, 0.9, dark); handle.position.y = 7.35;
+  hammer.add(foot, flange, rod, weight, handle);
+  G2.add(ped, pedPlate, plate2, moldBody, collar2, hammer);
+  const W0 = 1.28, DROP = 4.572, G = 98.1; // rest centre, 457.2 mm drop, g in units/s^2
+  const TARGET = 75;
+  const mixH = n => 0.635 + 0.315 * Math.exp(-n / 12);
+  let face = 1, blows = 0, total = 0;
+  const setMix = () => {
+    const h = mixH(total);
+    mix.scale.y = h / 0.635; mix.position.y = 0.12 - 0.495 + h / 2;
+    hammer.position.y = 0.12 + h;
+  };
+  weight.position.y = W0; setMix();
+
+  // Jaws with the specimen lying between them
+  const G3 = new THREE.Group();
+  const lowJ = jaw(194 * deg, 346 * deg), upJ = jaw(14 * deg, 166 * deg);
+  const sp3 = makeSpecimen(r3.capabilities.getMaxAnisotropy()); sp3.rotation.x = Math.PI / 2;
+  const ball3 = new THREE.Mesh(new THREE.SphereGeometry(0.07, 24, 16), steel); ball3.position.y = 0.68;
+  const pist3 = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 24), steel); pist3.position.y = 0.97;
+  upJ.add(ball3, pist3);
+  [-0.78, 0.78].forEach(x => { const r = new THREE.Mesh(rodG, steel); r.position.set(x, 0.1, 0); G3.add(r); });
+  const base3 = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.08, 0.9), steel); base3.position.y = -0.72;
+  G3.add(lowJ, upJ, sp3, base3);
+
+  s3.add(G1, G2, G3);
+  const views = {
+    molde: { p: [3.0, 2.5, 4.0], t: [0, 0.55, 0] },
+    martillo: { p: [8, 5.2, 11], t: [0, 3.0, 0] },
+    mordazas: { p: [2.7, 1.3, 4.6], t: [0, 0.05, 0] },
+  };
+  const groups = { molde: G1, martillo: G2, mordazas: G3 };
+  window.__benchTab = t => {
+    for (const k in groups) groups[k].visible = k === t;
+    cam3.position.set(...views[t].p); c3.target.set(...views[t].t); c3.update();
+  };
+  window.__benchTab('molde');
+
+  // animated state
+  let ex = 0, exT = 0, op = 0, opT = 0, flip = null, cyc = null, auto = false;
+  const count = document.getElementById('count');
+  const btnBlow = document.querySelector('[data-act="blow"]'), btnAuto = document.querySelector('[data-act="auto"]');
+  const paintCount = () => {
+    if (face > 2) { count.innerHTML = 'Probeta compactada. Sigue <b>enfriar y extraer</b>.'; btnBlow.disabled = true; btnAuto.textContent = 'Empezar de nuevo'; return; }
+    count.innerHTML = `Cara ${face} · golpe <b>${blows}</b> de ${TARGET}`;
+  };
+  const startBlow = () => { if (!cyc && !flip && face <= 2) cyc = { t: 0, speed: auto ? 3 : 1 }; };
+  window.__benchAct = (a, b) => {
+    if (a === 'explode') { exT = exT ? 0 : 1; b.textContent = exT ? 'Armar' : 'Desarmar'; }
+    if (a === 'open') { opT = opT ? 0 : 1; b.textContent = opT ? 'Cerrar' : 'Abrir'; }
+    if (a === 'blow') { auto = false; btnAuto.textContent = 'Compactar todo'; startBlow(); }
+    if (a === 'auto') {
+      if (face > 2) { face = 1; blows = 0; total = 0; moldBody.rotation.x = 0; setMix(); btnBlow.disabled = false; btnAuto.textContent = 'Compactar todo'; paintCount(); return; }
+      auto = !auto; b.textContent = auto ? 'Pausar' : 'Compactar todo'; if (auto) startBlow();
+    }
+  };
+  const LIFT = 0.35, FALL = Math.sqrt(2 * DROP / G);
+  const clock = new THREE.Clock();
+  const vis3 = whenVisible(bEl, () => { clock.getDelta(); requestAnimationFrame(loop3); });
+  function loop3() {
+    const dt = Math.min(clock.getDelta(), 0.05);
+    ex += (exT - ex) * Math.min(1, dt * 7); placeMold(ex);
+    op += (opT - op) * Math.min(1, dt * 7); upJ.position.y = 0.45 * op; sp3.position.y = 0;
+    if (cyc) {
+      cyc.t += dt * cyc.speed;
+      if (cyc.t < LIFT) weight.position.y = W0 + DROP * ease(cyc.t / LIFT);
+      else if (cyc.t < LIFT + FALL) { const f = cyc.t - LIFT; weight.position.y = W0 + DROP - 0.5 * G * f * f; }
+      else {
+        weight.position.y = W0; cyc = null; blows++; total++; setMix();
+        if (blows >= TARGET) { blows = 0; if (face === 1) flip = { t: 0 }; else face = 3; }
+        paintCount();
+        if (auto && !flip && face <= 2) startBlow();
+        if (face > 2) auto = false;
+      }
+    }
+    if (flip) {
+      flip.t += dt / 0.9; moldBody.rotation.x = Math.PI * ease(Math.min(1, flip.t));
+      if (flip.t >= 1) { flip = null; face = 2; paintCount(); if (auto) startBlow(); }
+    }
+    c3.update(); r3.render(s3, cam3);
+    if (vis3()) requestAnimationFrame(loop3);
+  }
+  fit(r3, cam3, bEl); addEventListener('resize', () => fit(r3, cam3, bEl));
+  paintCount();
 }
 
 // ---------- load–deformation curve (illustrative, not test data) ----------
