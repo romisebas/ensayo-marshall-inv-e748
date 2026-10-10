@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marshall · INV E-748</title>
+<meta name="description" content="Guía de estudio del ensayo Marshall (INV E-748-13): objetivo, fabricación de probetas, falla, cálculos e informe.">
+<meta name="theme-color" content="#1c1b19">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231c1b19'/%3E%3Cellipse cx='16' cy='10' rx='10' ry='4' fill='%23e8590c'/%3E%3Cpath d='M6 10v12c0 2.2 4.5 4 10 4s10-1.8 10-4V10' fill='none' stroke='%23e6e8e6' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --asphalt:#1c1b19; --asphalt-2:#262420; --asphalt-3:#34312b; --bone:#e9e6df; --bone-2:#a9a49a;
+  --stone:#e6e8e6; --stone-2:#d6dad7; --paper:#f3f4f2; --ink:#191b1a; --ink-2:#4a504e; --rule:#c3c8c5;
+  --heat:#e8590c; --heat-ink:#b23f00; --heat-wash:#fbe3d4;
+  --agg-1:#6f726f; --agg-2:#9a9e9a; --agg-3:#c4c7c3;
+  --ease-out:cubic-bezier(0.23,1,0.32,1); --ease-io:cubic-bezier(0.77,0,0.175,1);
+  --display:"Archivo",system-ui,sans-serif; --read:"Atkinson Hyperlegible",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --rail:232px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --stone:#1f2120; --stone-2:#2a2d2b; --paper:#252826; --ink:#e7e9e7; --ink-2:#a9b0ad; --rule:#3c413e;
+    --heat:#f07a3a; --heat-ink:#ff9a5e; --heat-wash:#3b2416;
+  }
+}
+:root[data-theme="dark"]{
+  --stone:#1f2120; --stone-2:#2a2d2b; --paper:#252826; --ink:#e7e9e7; --ink-2:#a9b0ad; --rule:#3c413e;
+  --heat:#f07a3a; --heat-ink:#ff9a5e; --heat-wash:#3b2416;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--stone);color:var(--ink);font:17px/1.65 var(--read);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--heat);color:var(--asphalt)}
+:focus-visible{outline:2px solid var(--heat);outline-offset:3px;border-radius:3px}
+a{color:inherit;text-decoration-color:var(--heat);text-underline-offset:3px;text-decoration-thickness:1.5px}
+html{scrollbar-color:var(--agg-1) transparent}
+.num,td,.mono{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-size:.88em;letter-spacing:-.01em}
+.heat{color:var(--heat-ink);font-family:var(--mono);font-weight:600;font-size:.9em;white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--heat);color:var(--asphalt);padding:8px 12px;z-index:50}
+.skip:focus{left:8px}
+
+/* ---------- masthead ---------- */
+.mast{background:var(--asphalt);color:var(--bone);position:relative;overflow:hidden}
+.mast-in{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);min-height:min(92vh,820px);padding:0 32px}
+.mast-copy{display:flex;flex-direction:column;justify-content:space-between;padding:36px 0 40px;position:relative;z-index:2}
+.mast-top{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;font-family:var(--mono);font-size:.8rem;color:var(--bone-2)}
+.mast-top b{color:var(--bone);font-weight:600}
+h1{font-family:var(--display);font-stretch:68%;font-weight:850;font-size:clamp(4.2rem,13vw,10.5rem);line-height:.82;letter-spacing:-.035em;margin:0 0 18px;text-transform:uppercase}
+h1 span{display:block;color:var(--heat)}
+.lede{font-size:clamp(1.08rem,1.6vw,1.3rem);max-width:34ch;color:var(--bone);margin:0 0 28px;line-height:1.45}
+.sched{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--asphalt-3);max-width:620px}
+.sched div{padding:14px 14px 0 0;position:relative}
+.sched div::before{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;border-radius:50%;background:var(--bone-2)}
+.sched div.hot::before{background:var(--heat)}
+.sched b{display:block;font-family:var(--display);font-stretch:80%;font-size:1.05rem;font-weight:700;letter-spacing:.01em}
+.sched span{font-size:.86rem;color:var(--bone-2);line-height:1.35;display:block}
+.resume{display:none;margin-top:22px;align-self:flex-start;background:none;border:1px solid var(--asphalt-3);color:var(--bone);font:600 .85rem var(--read);padding:9px 14px;border-radius:999px;cursor:pointer;transition:transform 160ms var(--ease-out),border-color 160ms ease}
+.resume.on{display:inline-flex;gap:8px;align-items:center}
+.resume:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.resume:hover{border-color:var(--heat)}}
+.stage{position:relative;min-height:420px}
+.stage canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block;cursor:grab}
+.stage canvas:active{cursor:grabbing}
+.stage-cap{position:absolute;right:0;bottom:36px;font-family:var(--mono);font-size:.74rem;color:var(--bone-2);text-align:right;line-height:1.5;pointer-events:none}
+.stage-cap b{color:var(--bone);font-weight:600}
+.nogl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:var(--bone-2);font-size:.9rem;text-align:center;padding:24px}
+
+/* ---------- body grid + strata rail ---------- */
+.body{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0 56px;padding:0 32px}
+.rail{position:sticky;top:0;align-self:start;height:100vh;min-width:0;padding:28px 0;display:flex;flex-direction:column}
+.rail-title{font-family:var(--mono);font-size:.72rem;color:var(--ink-2);margin:0 0 10px;display:flex;justify-content:space-between}
+.core{list-style:none;margin:0;padding:0;flex:1;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;background:var(--asphalt);box-shadow:0 10px 30px -12px rgba(0,0,0,.45)}
+.core li{flex:var(--h,1);min-height:34px;position:relative}
+.core a{position:absolute;inset:0;display:flex;align-items:center;gap:10px;padding:0 12px;text-decoration:none;color:var(--bone-2);font-size:.86rem;line-height:1.2;border-bottom:1px solid #00000055;transition:color 200ms ease}
+.core a::before{content:"";flex:0 0 38px;align-self:stretch;margin:6px 0;border-radius:3px;background:var(--hatch);opacity:.9}
+.core a .n{font-family:var(--mono);font-size:.7rem;color:var(--agg-1);width:18px}
+.core a[aria-current="true"]{color:var(--bone);background:var(--asphalt-2)}
+.core a[aria-current="true"] .n{color:var(--heat)}
+.core a[aria-current="true"]::before{box-shadow:0 0 0 2px var(--heat);opacity:1}
+@media (hover:hover) and (pointer:fine){.core a:hover{color:var(--bone)}}
+.flag{position:absolute;right:8px;top:50%;width:16px;height:20px;transform:translateY(-50%) rotate(-6deg);display:none}
+.core li.left .flag{display:block}
+.rail-legend{font-size:.76rem;color:var(--ink-2);margin-top:10px;display:flex;gap:6px;align-items:center}
+.rail-legend svg{flex:0 0 auto}
+
+/* hatches (aggregate grays on charcoal) */
+.h-asf{--hatch:radial-gradient(circle at 30% 40%,var(--agg-1) 1.2px,transparent 1.6px) 0 0/7px 7px,var(--asphalt-3)}
+.h-diag{--hatch:repeating-linear-gradient(45deg,var(--agg-2) 0 1.5px,transparent 1.5px 6px),var(--asphalt-3)}
+.h-grav{--hatch:radial-gradient(ellipse 3px 2.4px at 50% 50%,var(--agg-3) 98%,transparent) 0 0/9px 8px,radial-gradient(circle,var(--agg-1) 1.4px,transparent 1.8px) 4px 4px/9px 8px,var(--asphalt-3)}
+.h-horz{--hatch:repeating-linear-gradient(0deg,var(--agg-2) 0 1.5px,transparent 1.5px 5px),var(--asphalt-3)}
+.h-cross{--hatch:repeating-linear-gradient(45deg,var(--agg-2) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,var(--agg-2) 0 1px,transparent 1px 7px),var(--asphalt-3)}
+.h-fine{--hatch:radial-gradient(circle,var(--agg-3) .9px,transparent 1.2px) 0 0/4px 4px,var(--asphalt-3)}
+.h-rdiag{--hatch:repeating-linear-gradient(-45deg,var(--agg-2) 0 1.5px,transparent 1.5px 6px),var(--asphalt-3)}
+.h-vert{--hatch:repeating-linear-gradient(90deg,var(--agg-2) 0 1.5px,transparent 1.5px 6px),var(--asphalt-3)}
+.h-sand{--hatch:radial-gradient(circle at 20% 30%,var(--agg-2) .8px,transparent 1.1px) 0 0/5px 6px,radial-gradient(circle at 70% 80%,var(--agg-3) .8px,transparent 1.1px) 0 0/6px 5px,var(--asphalt-3)}
+
+/* ---------- reading column ---------- */
+main{padding:28px 0 120px;min-width:0}
+section{max-width:72ch;margin:0 0 88px}
+.opener{position:relative;margin:0 0 26px;padding:0 0 0 0}
+.opener .band{height:14px;border-radius:3px;background:var(--hatch);margin-bottom:18px}
+h2{font-family:var(--display);font-stretch:72%;font-weight:800;font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:.95;letter-spacing:-.025em;margin:0;text-wrap:balance}
+.opener p{margin:10px 0 0;color:var(--ink-2);font-size:1.02rem}
+h3{font-family:var(--display);font-stretch:85%;font-weight:700;font-size:1.6rem;letter-spacing:-.005em;margin:40px 0 8px}
+p{margin:0 0 16px}
+strong{font-weight:700}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.def{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:18px 18px 16px}
+.def h3{margin:0 0 4px;font-size:1.5rem}
+.def .u{font-family:var(--mono);font-size:.78rem;color:var(--heat-ink);display:block;margin-bottom:8px}
+.def p{margin:0;font-size:.97rem}
+.note{font-size:.88rem;color:var(--ink-2)}
+.alert{display:grid;grid-template-columns:28px 1fr;gap:12px;background:var(--heat-wash);border:1px solid color-mix(in srgb,var(--heat) 45%,transparent);border-radius:10px;padding:16px 18px;margin:24px 0}
+.alert p{margin:0}
+.alert p+p{margin-top:8px}
+.tw{overflow-x:auto;margin:14px 0 18px;border:1px solid var(--rule);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--display);font-stretch:85%;font-weight:700;font-size:.86rem;letter-spacing:.01em;color:var(--ink-2);background:var(--stone-2)}
+td .heat{font-size:.86em}
+figure{margin:22px 0 26px}
+figcaption{font-size:.86rem;color:var(--ink-2);margin-top:8px;line-height:1.5}
+svg text{font-family:var(--read)}
+
+/* steps */
+.steps{list-style:none;margin:18px 0 8px;padding:0;counter-reset:s}
+.step{position:relative;display:grid;grid-template-columns:44px 1fr;gap:0 14px;padding:0 0 22px;counter-increment:s}
+.step::after{content:"";position:absolute;left:21px;top:40px;bottom:2px;border-left:2px dashed var(--agg-2);transition:border-color 200ms ease}
+.step:last-child::after{display:none}
+.step.done::after{border-left-style:solid;border-left-color:var(--ink)}
+.tick{width:44px;height:44px;border-radius:50%;border:2px dashed var(--agg-1);background:var(--stone);display:flex;align-items:center;justify-content:center;font:600 .9rem var(--mono);color:var(--ink-2);cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease,border-color 200ms ease}
+.tick::before{content:counter(s,decimal-leading-zero)}
+.tick:active{transform:scale(.94)}
+.step.done .tick{border-style:solid;border-color:var(--ink);background:var(--ink);color:var(--stone)}
+.step.done .tick::before{content:"";width:14px;height:8px;border-left:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-2px) rotate(-45deg)}
+.step h4{font-family:var(--display);font-stretch:85%;font-size:1.24rem;font-weight:700;margin:9px 0 4px}
+.step p{margin:0 0 6px}
+.step.done h4{color:var(--ink-2)}
+.steps-tools{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--ink-2);margin-top:6px}
+.btn{font:600 .85rem var(--read);background:var(--ink);color:var(--stone);border:0;border-radius:999px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform 160ms var(--ease-out),background-color 160ms ease}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--rule)}
+@media (hover:hover) and (pointer:fine){.btn:hover{background:var(--heat);color:var(--asphalt)}.btn.ghost:hover{background:none;border-color:var(--heat)}}
+
+/* simulator */
+.sim{background:var(--asphalt);color:var(--bone);border-radius:14px;overflow:hidden;margin:26px 0 12px;box-shadow:0 18px 40px -20px rgba(0,0,0,.55)}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr}
+.sim-3d{position:relative;min-height:320px;border-right:1px solid var(--asphalt-3)}
+.sim-3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+.sim-chart{padding:16px 16px 6px}
+.sim-chart svg text{fill:var(--bone-2);font-size:11px}
+.sim-read{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--asphalt-3)}
+.sim-read div{padding:12px 16px;border-right:1px solid var(--asphalt-3)}
+.sim-read div:last-child{border-right:0}
+.sim-read span{display:block;font-size:.74rem;color:var(--bone-2)}
+.sim-read b{font:600 1.35rem var(--mono);letter-spacing:-.02em}
+.sim-ctl{display:flex;gap:14px;align-items:center;padding:14px 16px;border-top:1px solid var(--asphalt-3)}
+.sim-ctl input[type=range]{flex:1;accent-color:var(--heat)}
+.sim-ctl .btn{background:var(--heat);color:var(--asphalt)}
+.sim-ctl .btn:active{transform:scale(.97)}
+.sim-status{padding:0 16px 14px;font-size:.88rem;color:var(--bone-2);min-height:2.4em}
+.sim-status b{color:var(--heat)}
+
+/* calculator */
+.calc{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;align-items:end;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:18px;margin:18px 0}
+.calc label{display:block;font-size:.84rem;color:var(--ink-2);margin-bottom:6px}
+.calc input{width:100%;font:600 1.15rem var(--mono);color:var(--ink);background:var(--stone);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;caret-color:var(--heat)}
+.calc input:focus{outline:2px solid var(--heat);outline-offset:1px}
+.calc output{display:block;font:700 1.9rem var(--mono);letter-spacing:-.03em;line-height:1.1}
+.calc .sub{font-size:.82rem;color:var(--ink-2)}
+.calc .err{color:var(--heat-ink);font-size:.82rem;min-height:1.2em;grid-column:1/-1;margin-top:-4px}
+details{margin:12px 0 0}
+summary{cursor:pointer;font-weight:700;font-size:.95rem;padding:6px 0}
+summary::marker{color:var(--heat)}
+tr.hit td{background:var(--heat-wash);font-weight:700}
+
+ol.plain,ul.plain{padding-left:1.2em;margin:0 0 16px}
+ol.plain li,ul.plain li{margin-bottom:8px}
+ol.plain li::marker{font-family:var(--mono);color:var(--ink-2);font-size:.85em}
+
+.close{background:var(--asphalt);color:var(--bone-2);font-size:.85rem}
+.close-in{max-width:1320px;margin:0 auto;padding:40px 32px 48px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.close b{color:var(--bone);font-family:var(--display);font-stretch:75%;font-size:1.4rem;display:block;margin-bottom:4px}
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .mast-in{grid-template-columns:1fr;min-height:0;padding:0 16px}
+  .mast-copy{padding:24px 0 8px}
+  .stage{min-height:320px;height:52vw;max-height:420px;order:2;margin:0 -16px}
+  .stage-cap{right:16px;bottom:14px}
+  .sched{margin-bottom:8px}
+  .body{grid-template-columns:1fr;padding:0 16px}
+  .rail{position:sticky;top:0;height:auto;padding:8px 0;z-index:20;background:var(--stone);margin:0 -16px;padding:8px 16px}
+  .rail-title,.rail-legend{display:none}
+  .core{flex-direction:row;overflow-x:auto;scrollbar-width:none;border-radius:8px}
+  .core::-webkit-scrollbar{display:none}
+  .core li{flex:0 0 auto;min-height:40px}
+  .core a{position:relative;height:40px;padding:0 12px 0 8px;white-space:nowrap;border-bottom:0;border-right:1px solid #00000055}
+  .core a::before{flex:0 0 18px;margin:8px 0}
+  .core a .n{display:none}
+  .flag{position:static;transform:rotate(-6deg)}
+  html{scroll-padding-top:72px}
+  main{padding-top:20px}
+  .sim-grid{grid-template-columns:1fr}
+  .sim-3d{border-right:0;border-bottom:1px solid var(--asphalt-3);min-height:260px}
+}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .pair{grid-template-columns:1fr}
+  .sched{grid-template-columns:1fr;border-top:0;gap:10px}
+  .sched div{padding:0 0 0 18px}
+  .sched div::before{top:7px}
+  .calc{grid-template-columns:1fr 1fr}
+  .calc .res{grid-column:1/-1}
+  .sim-read b{font-size:1.1rem}
+  .close-in{padding:32px 16px 40px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition-duration:0ms!important}
+}
+</style>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<header class="mast">
+  <div class="mast-in">
+    <div class="mast-copy">
+      <div class="mast-top"><b>INV E-748-13</b><span>INVIAS · Normas de ensayo de materiales</span><span>Pavimentos · Lab 2</span></div>
+      <div>
+        <h1>Marshall<span>Ensayo</span></h1>
+        <p class="lede">Cuánta carga aguanta una mezcla asfáltica caliente antes de ceder, y cuánto se deforma cuando lo hace.</p>
+        <div class="sched" aria-label="Cronograma del laboratorio">
+          <div class="hot"><b>Sáb 10 oct</b><span>Mezclar, curar y compactar las probetas</span></div>
+          <div><b>Después del reposo</b><span>Gravedad específica bulk y espesor</span></div>
+          <div class="hot"><b>Mar 13 oct</b><span>Baño a 60 °C y falla en la prensa</span></div>
+        </div>
+        <button class="resume" id="resume" type="button"></button>
+      </div>
+    </div>
+    <div class="stage" id="hero" aria-label="Modelo 3D de una probeta Marshall. Arrastra para girarla.">
+      <div class="nogl" id="hero-nogl">Tu navegador no pudo cargar el modelo 3D. La guía funciona igual.</div>
+      <div class="stage-cap"><b>Probeta Marshall</b><br>Ø 102 mm × 63.5 mm · ~1200 g<br>arrastra para girar</div>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+  <nav class="rail" aria-label="Secciones">
+    <p class="rail-title"><span>Columna del núcleo</span><span>9 capas</span></p>
+    <ol class="core" id="core">
+      <li style="--h:1.1"><a href="#objetivo" class="h-asf"><span class="n">1</span>Qué mide</a></li>
+      <li style="--h:.9"><a href="#equipo" class="h-diag"><span class="n">2</span>Equipo</a></li>
+      <li style="--h:1.8"><a href="#sabado" class="h-grav"><span class="n">3</span>Sábado: fabricar</a></li>
+      <li style="--h:.8"><a href="#reposo" class="h-horz"><span class="n">4</span>Reposo y medidas</a></li>
+      <li style="--h:1.6"><a href="#martes" class="h-cross"><span class="n">5</span>Martes: fallar</a></li>
+      <li style="--h:1.1"><a href="#calculos" class="h-fine"><span class="n">6</span>Cálculos</a></li>
+      <li style="--h:.8"><a href="#informe" class="h-rdiag"><span class="n">7</span>Informe</a></li>
+      <li style="--h:.8"><a href="#precision" class="h-vert"><span class="n">8</span>Precisión</a></li>
+      <li style="--h:.9"><a href="#repaso" class="h-sand"><span class="n">9</span>Para el quiz</a></li>
+    </ol>
+    <p class="rail-legend"><svg width="12" height="15" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1v18" stroke="currentColor" stroke-width="2"/><path d="M3 2h11l-3 4 3 4H3z" fill="#e8590c"/></svg>la bandera marca dónde quedaste</p>
+  </nav>
+
+  <main id="contenido">
+
+    <section id="objetivo" class="h-asf">
+      <div class="opener"><div class="band"></div><h2>Qué mide el ensayo</h2><p>Numerales 1 a 3 de la norma.</p></div>
+      <p>El ensayo Marshall mide la resistencia de una mezcla asfáltica a la deformación plástica. Se fabrican probetas cilíndricas de 102 mm (4") de diámetro y 63.5 mm (2½") de altura, se llevan a 60 °C y se cargan por el costado, perpendicular a su eje, hasta que fallan.</p>
+      <div class="pair">
+        <div class="def"><h3>Estabilidad</h3><span class="u">N o lbf · se reporta a 50 N</span><p>La carga máxima que soporta la probeta. Dice qué tanto resiste la mezcla a deformarse bajo el tráfico.</p></div>
+        <div class="def"><h3>Flujo</h3><span class="u">mm o 0.01" · 0.12" se escribe 12</span><p>Cuánto se deformó la probeta en el instante de la falla.</p></div>
+      </div>
+      <p>Sirve para dos cosas: diseñar la mezcla en el laboratorio, buscando el contenido óptimo de asfalto, y controlar en obra la mezcla que sale de planta. Solo aplica a mezclas con cemento asfáltico y agregado de tamaño máximo de 25.4 mm (1") o menos. Con las mismas probetas se hacen después densidad, vacíos, tracción indirecta, fatiga, creep y módulo resiliente.</p>
+
+      <h3>Cómo sale el contenido óptimo</h3>
+      <p>Para cada gradación se hacen probetas con varios contenidos de asfalto, separados <span class="mono">0.5 %</span> en masa de la mezcla, con mínimo 3 probetas por contenido. Un diseño de 6 contenidos pide al menos 18 probetas: unos 23 kg de agregado y 4 L de asfalto. Luego se grafican estabilidad, flujo, densidad, vacíos con aire y vacíos llenos de asfalto contra el porcentaje de ligante. En mezclas densas la estabilidad suele tener un pico dentro del rango ensayado.</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-label="Forma típica de las curvas de estabilidad y de vacíos contra el contenido de asfalto">
+          <g font-size="12" fill="var(--ink-2)">
+            <line x1="44" y1="200" x2="300" y2="200" stroke="var(--rule)" stroke-width="1.5"/><line x1="44" y1="30" x2="44" y2="200" stroke="var(--rule)" stroke-width="1.5"/>
+            <path d="M60 165 Q 160 50 290 150" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+            <g fill="var(--ink)"><circle cx="60" cy="165" r="4"/><circle cx="106" cy="118" r="4"/><circle cx="152" cy="98" r="4"/><circle cx="198" cy="100" r="4"/><circle cx="244" cy="118" r="4"/><circle cx="290" cy="150" r="4"/></g>
+            <line x1="168" y1="96" x2="168" y2="200" stroke="var(--heat)" stroke-dasharray="4 4"/>
+            <text x="172" y="88" fill="var(--heat-ink)">pico</text>
+            <text x="172" y="228" text-anchor="middle">% de asfalto</text>
+            <text x="44" y="20">Estabilidad</text>
+            <line x1="364" y1="200" x2="620" y2="200" stroke="var(--rule)" stroke-width="1.5"/><line x1="364" y1="30" x2="364" y2="200" stroke="var(--rule)" stroke-width="1.5"/>
+            <path d="M380 55 Q 480 150 610 180" fill="none" stroke="var(--ink)" stroke-width="2.5"/>
+            <g fill="var(--ink)"><circle cx="380" cy="55" r="4"/><circle cx="426" cy="94" r="4"/><circle cx="472" cy="124" r="4"/><circle cx="518" cy="146" r="4"/><circle cx="564" cy="164" r="4"/><circle cx="610" cy="180" r="4"/></g>
+            <text x="492" y="228" text-anchor="middle">% de asfalto</text>
+            <text x="364" y="20">Vacíos con aire</text>
+          </g>
+        </svg>
+        <figcaption>Forma típica, sin valores. Cada punto es el promedio de 3 probetas. El óptimo se escoge con los criterios del artículo de las Especificaciones INVIAS para esa mezcla, no con los del manual MS-2 (Anexo A).</figcaption>
+      </figure>
+    </section>
+
+    <section id="equipo" class="h-diag">
+      <div class="opener"><div class="band"></div><h2>Equipo</h2><p>Numeral 4. Lo que hay que reconocer en el laboratorio.</p></div>
+      <div class="tw"><table>
+        <thead><tr><th>Equipo</th><th>Lo que pide la norma</th></tr></thead>
+        <tbody>
+        <tr><td>Molde</td><td>Cilindro con collar de extensión y placa de base.</td></tr>
+        <tr><td>Martillo</td><td>Masa de <span class="mono">4.54 ± 0.01 kg</span> (10 lb) que cae <span class="mono">457.2 ± 1.5 mm</span> (18"). Manual, con protector de dedos, o mecánico. El de base giratoria trabaja a 18–30 rpm y 64 ± 4 golpes por minuto.</td></tr>
+        <tr><td>Pedestal</td><td>Madera de 203 × 203 × 457 mm con platina de acero de 305 × 305 × 25 mm, anclado a concreto y a plomo.</td></tr>
+        <tr><td>Sujetador y extractor</td><td>El sujetador sostiene molde, collar y placa al compactar. El extractor es un disco de 100 mm con gato, para sacar la probeta sin deformarla.</td></tr>
+        <tr><td>Mordazas</td><td>Segmentos cilíndricos superior e inferior con varillas guía, ni muy apretadas ni sueltas.</td></tr>
+        <tr><td>Prensa</td><td>Deformación constante de <span class="mono">50 ± 5 mm/min</span>.</td></tr>
+        <tr><td>Medidor de estabilidad</td><td>Anillo de <span class="mono">20 kN</span> con sensibilidad de 50 N y dial de 0.0025 mm, o celda de carga.</td></tr>
+        <tr><td>Medidor de flujo</td><td>Deformímetro con divisiones de 0.25 mm, o un TLDV.</td></tr>
+        <tr><td>Baño de agua</td><td><span class="heat">60 ± 1 °C</span>, 30 mm de agua sobre las probetas, falso fondo a 50 mm, circulación.</td></tr>
+        <tr><td>Varios</td><td>Horno o placa con control de ± 3 °C, bandejas, recipientes con tapa, palustres, termómetros de 10 a 200 °C, balanza de 2 kg legible a 0.1 g, tamices, guantes y crayolas.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="sabado" class="h-grav">
+      <div class="opener"><div class="band"></div><h2>Sábado: fabricar las probetas</h2><p>Numeral 5. Los agregados ya están secos, tamizados y pesados.</p></div>
+
+      <h3>Las temperaturas</h3>
+      <p>La de mezcla y la de compactación no son un número fijo: salen de la curva viscosidad contra temperatura del asfalto que usen (INV E-753). Si el asfalto es modificado, ese criterio puede no servir y los rangos los da el fabricante.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Qué</th><th>Temperatura</th><th>Num.</th></tr></thead>
+        <tbody>
+        <tr><td>Secado de agregados</td><td><span class="heat">105–110 °C</span> hasta masa constante</td><td class="mono">5.3</td></tr>
+        <tr><td>Asfalto para mezclar</td><td>La que da <span class="mono">170 ± 20 cP</span></td><td class="mono">5.4</td></tr>
+        <tr><td>Compactación</td><td>La que da <span class="mono">280 ± 30 cP</span></td><td class="mono">5.4</td></tr>
+        <tr><td>Agregados antes de mezclar</td><td>Sobre la de mezcla, sin pasarla en más de <span class="heat">28 °C</span></td><td class="mono">5.5.1</td></tr>
+        <tr><td>Curado</td><td><span class="heat">8–11 °C</span> sobre la de compactación, 1 a 2 h</td><td class="mono">5.5.2</td></tr>
+        <tr><td>Molde, collar, placa, base del martillo</td><td><span class="heat">90–150 °C</span></td><td class="mono">5.6.1</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Paso a paso</h3>
+      <p class="note">Marca cada paso cuando lo terminen. Se guarda en este celular.</p>
+      <ol class="steps" data-group="sab">
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Pesar por probeta</h4><p>En bandejas taradas, cada fracción según la granulometría, para que la probeta quede de <span class="mono">63.5 ± 2.5 mm</span>: unos 1200 g por probeta, 2400 g para dos, 3600 g para tres.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Calentar</h4><p>Agregados al horno o la placa por encima de la temperatura de mezcla, máximo <span class="heat">28 °C</span> más. Asfalto en recipiente con tapa. Sobre la placa, una placa desviadora o arena para que no haya puntos sobrecalentados.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Mezclar</h4><p>Agregados al recipiente y unos 5 s en seco. Cráter en el centro, se vierte el asfalto pesado y se mezcla rápido hasta que todo quede cubierto: máximo <span class="mono">60 s</span> para una probeta, <span class="mono">120 s</span> para una bachada de varias. Sin perder material.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Curar</h4><p>Cada porción en recipiente metálico cerrado, horno ventilado a <span class="heat">8–11 °C</span> sobre la temperatura de compactación, de <span class="mono">1 a 2 h</span>. Una bachada múltiple se mezcla a mano y se cuartea antes.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Preparar el molde</h4><p>Molde, collar, placa y base del martillo limpios y a <span class="heat">90–150 °C</span>. Se arma y se pone papel filtro en el fondo.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Vaciar y chuzar</h4><p>Toda la mezcla al molde. Con espátula caliente: <span class="mono">15</span> golpes por el perímetro y <span class="mono">10</span> en el centro. Papel filtro encima. Verificar que esté en el rango de compactación.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Compactar la primera cara</h4><p>Molde en el sujetador sobre el pedestal y el número de golpes especificado. Martillo manual vertical, limpio y un poco aceitado.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Voltear y compactar la segunda</h4><p>Placa y collar a los extremos opuestos, molde invertido y los mismos golpes.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Enfriar y extraer</h4><p>Enfriar hasta que no se dañe al sacarla: ventilador, o molde en agua fría dentro de una bolsa. Extractor, marca con crayola y reposo de una noche en superficie plana.</p></div></li>
+      </ol>
+      <div class="steps-tools"><span data-count="sab"></span><button class="btn ghost" type="button" data-reset="sab">Borrar marcas</button></div>
+
+      <div class="alert" role="note">
+        <svg width="22" height="26" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1v18" stroke="var(--ink)" stroke-width="2"/><path d="M3 2h11l-3 4 3 4H3z" fill="var(--heat)"/></svg>
+        <div><p><strong>Número de golpes por cara.</strong> La norma solo dice "el especificado". Lo fija la especificación de la mezcla según el tránsito. Los datos de precisión de la norma se hicieron con 75 golpes. Confírmenlo con el profesor.</p><p>El curado de 1 a 2 h no estaba en el método Marshall original, y las probetas curadas dan propiedades distintas a las compactadas de inmediato.</p></div>
+      </div>
+    </section>
+
+    <section id="reposo" class="h-horz">
+      <div class="opener"><div class="band"></div><h2>Reposo y medidas</h2><p>Numeral 5.6.3.</p></div>
+      <p>Después de la noche de reposo se determina la gravedad específica bulk de cada probeta con INV E-733, E-734 o E-802. Las probetas de un mismo grupo deben quedar dentro de <span class="mono">± 0.020</span> de su promedio. Luego se mide el espesor según INV E-744, que hace falta para corregir la estabilidad.</p>
+      <div class="alert" role="note">
+        <svg width="22" height="26" viewBox="0 0 16 20" aria-hidden="true"><path d="M2 1v18" stroke="var(--ink)" stroke-width="2"/><path d="M3 2h11l-3 4 3 4H3z" fill="var(--heat)"/></svg>
+        <div><p><strong>Del sábado al martes son unas 72 horas.</strong> El numeral 6.1 pide hacer la falla dentro de las 24 h siguientes a la compactación. Pregunten si es una decisión del laboratorio y anótenlo en el informe como desviación de la norma.</p></div>
+      </div>
+    </section>
+
+    <section id="martes" class="h-cross">
+      <div class="opener"><div class="band"></div><h2>Martes: fallar las probetas</h2><p>Numeral 6.</p></div>
+      <h3>Paso a paso</h3>
+      <ol class="steps" data-group="mar">
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Calentar a 60 °C</h4><p>Baño de agua a <span class="heat">60 ± 1 °C</span> durante <span class="mono">30–40 min</span>, o horno a 60 °C durante <span class="mono">120–130 min</span>. Una probeta falsa con termocupla sirve para vigilar la temperatura.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Preparar las mordazas</h4><p>Barras guía e interior de las mordazas bien limpios, y guías lubricadas para que la mordaza superior deslice libre. Mordazas entre <span class="heat">20 y 40 °C</span>; si se calentaron en agua, secarlas por dentro.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Montar</h4><p>Sacar una probeta, secar el exceso de agua con toalla y centrarla en la mordaza inferior. Mordaza superior, todo centrado en la prensa, medidor de flujo en su sitio y en cero, con el vástago firme contra la mordaza superior.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Cargar hasta la falla</h4><p>A <span class="mono">50 ± 5 mm/min</span> hasta que la carga llegue al máximo y empiece a bajar. Desde que sale del baño hasta que falla: máximo <span class="heat">30 s</span>. Mejor dos personas, una en el anillo y otra en el deformímetro.</p></div></li>
+        <li class="step"><button class="tick" type="button" aria-label="Marcar paso"></button><div><h4>Leer y repetir</h4><p>Método A: el flujo es la lectura del deformímetro en la falla y la estabilidad la carga máxima. Método B: se lee en la curva, como en el simulador. Se repite con cada probeta.</p></div></li>
+      </ol>
+      <div class="steps-tools"><span data-count="mar"></span><button class="btn ghost" type="button" data-reset="mar">Borrar marcas</button></div>
+
+      <h3>Simulador de la falla</h3>
+      <p>Mueve la barra o dale a cargar. La deformación del modelo está exagerada para que se vea, y la curva es inventada para ilustrar: sus números no son de ningún ensayo real. La velocidad del botón sí es la de la norma, 50 mm/min.</p>
+      <div class="sim" id="sim">
+        <div class="sim-grid">
+          <div class="sim-3d" id="sim3d" aria-label="Modelo 3D de la probeta acostada entre las mordazas"></div>
+          <div class="sim-chart">
+            <svg id="chart" viewBox="0 0 320 240" role="img" aria-label="Curva carga contra deformación">
+              <g id="axes"></g><path id="tan" fill="none" stroke="#6fb3d4" stroke-width="1.2" stroke-dasharray="4 4" opacity="0"/>
+              <path id="curveBg" fill="none" stroke="#4a463f" stroke-width="2"/>
+              <path id="curve" fill="none" stroke="#e8590c" stroke-width="2.5"/>
+              <circle id="dot" r="5" fill="#e9e6df"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sim-read">
+          <div><span>Carga</span><b id="rLoad">0.00 kN</b></div>
+          <div><span>Deformación</span><b id="rDef">0.00 mm</b></div>
+          <div><span>Tiempo de carga</span><b id="rT">0.0 s</b></div>
+        </div>
+        <div class="sim-ctl">
+          <button class="btn" id="play" type="button">Cargar</button>
+          <input type="range" id="slider" min="0" max="6" step="0.01" value="0" aria-label="Deformación en milímetros">
+        </div>
+        <p class="sim-status" id="status" aria-live="polite">La probeta está montada y el deformímetro en cero.</p>
+      </div>
+      <p class="note">Fíjate que el flujo por el método A (desde el cero del dial) sale más largo que por el método B (desde donde la tangente corta el eje). Por eso el informe pide decir cuál método se usó. Si el pico no es claro, el método B toma el punto 1.5 mm a la derecha de la tangente.</p>
+    </section>
+
+    <section id="calculos" class="h-fine">
+      <div class="opener"><div class="band"></div><h2>Cálculos</h2><p>Numeral 7.</p></div>
+      <p>La carga sale de la lectura máxima del anillo con su curva o constante de calibración. Esa constante es del anillo de su laboratorio; la norma no la da. Si la probeta no mide 63.5 mm, la estabilidad se multiplica por el factor de la Tabla 748-1. Con factores muy altos o muy bajos hay que tener cuidado. También se aplica a núcleos.</p>
+      <div class="calc" id="calc">
+        <div><label for="cH">Espesor (mm)</label><input id="cH" inputmode="decimal" value="61.9" autocomplete="off"></div>
+        <div><label for="cP">Carga máxima (N)</label><input id="cP" inputmode="decimal" value="9800" autocomplete="off"></div>
+        <div class="res"><span class="sub">Estabilidad corregida</span><output id="cOut" for="cH cP">10 200 N</output><span class="sub" id="cSub">factor 1.04 (fila de 61.9 mm)</span></div>
+        <p class="err" id="cErr" aria-live="polite"></p>
+      </div>
+      <p class="note">La tabla se entra por volumen; aquí se usa la fila de espesor más cercano. El resultado se redondea a 50 N, como pide el informe. Los valores por defecto son de ejemplo.</p>
+      <details>
+        <summary>Tabla 748-1 completa</summary>
+        <div class="tw"><table id="ftable"><thead><tr><th>Volumen (cm³)</th><th>Espesor (mm)</th><th>Espesor (pg)</th><th>Factor</th></tr></thead><tbody></tbody></table></div>
+      </details>
+    </section>
+
+    <section id="informe" class="h-rdiag">
+      <div class="opener"><div class="band"></div><h2>Qué lleva el informe</h2><p>Numeral 8.</p></div>
+      <ol class="plain">
+        <li>Tipo de muestra: de laboratorio, de planta o núcleo de pavimento.</li>
+        <li>Tipo de agregados, granulometría y tipo de ligante.</li>
+        <li>Temperaturas de mezcla, compactación y ensayo, a 0.2 °C.</li>
+        <li>Gravedad específica bulk de cada probeta y su promedio por contenido de asfalto.</li>
+        <li>Altura de cada probeta, redondeada a 0.25 mm.</li>
+        <li>Estabilidad corregida de cada probeta y promedio, redondeada a 50 N.</li>
+        <li>Flujo de cada probeta y promedio, y el método usado: pico de la curva o paralela a la tangente.</li>
+      </ol>
+    </section>
+
+    <section id="precision" class="h-vert">
+      <div class="opener"><div class="band"></div><h2>Precisión</h2><p>Numeral 9. Un resultado es el promedio de 3 probetas.</p></div>
+      <div class="tw"><table>
+        <thead><tr><th>Ensayo</th><th>Condición</th><th>Coef. de variación</th><th>Rango entre 2 resultados</th></tr></thead>
+        <tbody>
+        <tr><td rowspan="2">Estabilidad</td><td>Un operador</td><td class="mono">6 %</td><td class="mono">16 %</td></tr>
+        <tr><td>Entre laboratorios</td><td class="mono">16 %</td><td class="mono">43 %</td></tr>
+        <tr><td rowspan="2">Flujo</td><td>Un operador</td><td class="mono">9 %</td><td class="mono">26 %</td></tr>
+        <tr><td>Entre laboratorios</td><td class="mono">20 %</td><td class="mono">58 %</td></tr>
+        </tbody>
+      </table></div>
+      <p>Con una dispersión así entre laboratorios, la norma dice que el ensayo no sirve para aceptar materiales comparando resultados de laboratorios distintos. Los datos vienen de probetas de 4", 75 golpes por cara y 3 a 5 % de vacíos.</p>
+    </section>
+
+    <section id="repaso" class="h-sand">
+      <div class="opener"><div class="band"></div><h2>Para el quiz</h2><p>Lo que no cabe en el paso a paso pero pueden preguntar.</p></div>
+      <ul class="plain">
+        <li>Los núcleos de pavimento se pueden ensayar para información, pero no para aceptar ni verificar especificaciones. Si sus bordes no son lisos o perpendiculares, la estabilidad sale más baja por concentración de esfuerzos.</li>
+        <li>La mezcla de planta puede dar valores distintos a los de diseño por el mezclado y el envejecimiento del asfalto. Si en obra los resultados cambian mucho, la causa puede ser el muestreo, la técnica, la gradación, el contenido de ligante o la planta, y se para la producción hasta corregir.</li>
+        <li>No conviene operar varios martillos mecánicos al tiempo porque cambia la densidad. Lo mejor es compactar todas las probetas con el mismo martillo.</li>
+        <li>El diseño completo sigue el manual MS-2 del Asphalt Institute, salvo la elección del óptimo, que va por las Especificaciones Generales de INVIAS (Anexo A, obligatorio).</li>
+        <li>Normas de referencia: ASTM D6926-10 y D6927-06. Esta versión reemplaza a la INV E-748-07.</li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<footer class="close">
+  <div class="close-in">
+    <div><b>Marshall · INV E-748-13</b>Guía de estudio hecha a partir de la norma del INVIAS para el laboratorio 2 de Pavimentos.</div>
+    <div>Los números son de la norma, salvo donde se dice que son de ejemplo.<br>Verifiquen con el profesor lo que define el laboratorio.</div>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="flag" viewBox="0 0 16 20"><path d="M2 1v18" stroke="#e9e6df" stroke-width="2"/><path d="M3 2h11l-3 4 3 4H3z" fill="#e8590c"/></symbol></svg>
+
+<script>
+// ---------- rail: current section + "aquí quedé" flag ----------
+(() => {
+  const store = {
+    get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+    set(k,v){ try { localStorage.setItem(k,v); } catch {} }
+  };
+  window.__store = store;
+  const links = [...document.querySelectorAll('#core a')];
+  const byId = Object.fromEntries(links.map(a => [a.hash.slice(1), a]));
+  links.forEach(a => a.insertAdjacentHTML('beforeend','<svg class="flag" aria-hidden="true"><use href="#flag"/></svg>'));
+  const setFlag = id => {
+    links.forEach(a => a.parentElement.classList.toggle('left', a.hash === '#'+id));
+  };
+  const saved = store.get('marshall:left');
+  const btn = document.getElementById('resume');
+  if (saved && byId[saved] && saved !== 'objetivo') {
+    setFlag(saved);
+    btn.innerHTML = '<svg width="12" height="15" viewBox="0 0 16 20" aria-hidden="true"><use href="#flag"/></svg>Seguir en: ' + byId[saved].textContent.replace(/^\d/,'');
+    btn.classList.add('on');
+    btn.onclick = () => document.getElementById(saved).scrollIntoView();
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const id = e.target.id;
+      links.forEach(a => a.setAttribute('aria-current', a.hash === '#'+id ? 'true' : 'false'));
+      const cur = byId[id];
+      if (matchMedia('(max-width:1000px)').matches) cur.scrollIntoView({block:'nearest',inline:'center'});
+      store.set('marshall:left', id); setFlag(id);
+    });
+  }, {rootMargin:'-35% 0px -60% 0px'});
+  document.querySelectorAll('main section').forEach(s => io.observe(s));
+})();
+
+// ---------- step checklists (line form carries state) ----------
+(() => {
+  const store = window.__store;
+  document.querySelectorAll('.steps').forEach(list => {
+    const g = list.dataset.group, key = 'marshall:steps:'+g;
+    const steps = [...list.children];
+    const count = document.querySelector(`[data-count="${g}"]`);
+    let done = (store.get(key) || '').split(',').filter(Boolean).map(Number);
+    const paint = () => {
+      steps.forEach((li,i) => {
+        const on = done.includes(i);
+        li.classList.toggle('done', on);
+        li.querySelector('.tick').setAttribute('aria-pressed', on);
+        li.querySelector('.tick').setAttribute('aria-label', (on ? 'Desmarcar' : 'Marcar') + ' paso ' + (i+1));
+      });
+      count.textContent = `${done.length} de ${steps.length} pasos hechos`;
+      store.set(key, done.join(','));
+    };
+    steps.forEach((li,i) => li.querySelector('.tick').addEventListener('click', () => {
+      done = done.includes(i) ? done.filter(x => x !== i) : [...done, i];
+      paint();
+    }));
+    document.querySelector(`[data-reset="${g}"]`).addEventListener('click', () => { done = []; paint(); });
+    paint();
+  });
+})();
+
+// ---------- correction factor calculator ----------
+(() => {
+  const T = [[200,213,25.4,1.00,5.56],[214,225,27.0,1.06,5.00],[226,237,28.6,1.12,4.55],[238,250,30.2,1.19,4.17],[251,264,31.8,1.25,3.85],[265,276,33.3,1.31,3.57],[277,289,34.9,1.38,3.33],[290,301,36.5,1.44,3.03],[302,316,38.1,1.50,2.78],[317,328,39.7,1.56,2.50],[329,340,41.3,1.62,2.27],[341,353,42.9,1.69,2.08],[354,367,44.4,1.75,1.92],[368,379,46.0,1.81,1.79],[380,392,47.6,1.88,1.67],[393,405,49.2,1.94,1.56],[406,420,50.8,2.00,1.47],[421,431,52.4,2.06,1.39],[432,443,54.0,2.12,1.32],[444,456,55.6,2.19,1.25],[457,470,57.2,2.25,1.19],[471,482,58.7,2.31,1.14],[483,495,60.3,2.38,1.09],[496,508,61.9,2.44,1.04],[509,522,63.5,2.50,1.00],[523,535,65.1,2.56,0.96],[536,546,66.7,2.62,0.93],[547,559,68.3,2.69,0.89],[560,573,69.8,2.75,0.86],[574,585,71.4,2.81,0.83],[586,598,73.0,2.88,0.81],[599,610,74.6,2.94,0.78],[611,626,76.2,3.00,0.76]];
+  const tb = document.querySelector('#ftable tbody');
+  tb.innerHTML = T.map(r => `<tr><td>${r[0]} a ${r[1]}</td><td>${r[2].toFixed(1)}</td><td>${r[3].toFixed(2)}</td><td>${r[4].toFixed(2)}</td></tr>`).join('');
+  const rows = [...tb.children];
+  const nearest = h => T.reduce((b,r,i) => Math.abs(r[2]-h) < Math.abs(T[b][2]-h) ? i : b, 0);
+  const round50 = n => Math.round(n/50)*50;
+  console.assert(round50(9800*1.04) === 10200 && T[nearest(62.3)][4] === 1.04 && T[nearest(63.4)][4] === 1.00, 'calc self-check');
+  const fmt = n => n.toLocaleString('es-CO').replace(/\./g,' ');
+  const h = document.getElementById('cH'), p = document.getElementById('cP');
+  const out = document.getElementById('cOut'), sub = document.getElementById('cSub'), err = document.getElementById('cErr');
+  const run = () => {
+    const H = parseFloat(h.value.replace(',','.')), P = parseFloat(p.value.replace(',','.'));
+    rows.forEach(r => r.classList.remove('hit'));
+    if (!(H > 0) || !(P > 0)) { err.textContent = 'Escribe un espesor y una carga mayores que cero.'; out.textContent = '—'; sub.textContent = ''; return; }
+    err.textContent = (H < 25.4 || H > 76.2) ? 'Ese espesor está fuera de la tabla (25.4 a 76.2 mm). Se usa la fila del extremo.' : '';
+    const i = nearest(H), f = T[i][4];
+    rows[i].classList.add('hit');
+    out.textContent = fmt(round50(P*f)) + ' N';
+    sub.textContent = `factor ${f.toFixed(2)} (fila de ${T[i][2].toFixed(1)} mm)`;
+  };
+  h.addEventListener('input', run); p.addEventListener('input', run); run();
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Procedural asphalt texture: dark bitumen with aggregate of several gray sizes.
+function asphaltCanvas(w, h, seed = 7, round = false) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d');
+  let s = seed; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  g.fillStyle = '#191714'; g.fillRect(0, 0, w, h);
+  const grays = ['#4d4a45','#6f6c66','#8e8b84','#a9a59c','#5c5852','#c2bdb2'];
+  const n = Math.floor(w * h / 160);
+  for (let i = 0; i < n; i++) {
+    const big = rnd() < 0.06, r = big ? 6 + rnd() * 12 : 1 + rnd() * 4.5;
+    const x = rnd() * w, y = rnd() * h;
+    if (round && Math.hypot(x - w/2, y - h/2) > w/2) continue;
+    g.fillStyle = grays[Math.floor(rnd() * grays.length)];
+    g.globalAlpha = big ? 0.95 : 0.55 + rnd() * 0.4;
+    g.beginPath();
+    const k = 5 + Math.floor(rnd() * 3), a0 = rnd() * 6.28;
+    for (let j = 0; j < k; j++) {
+      const a = a0 + j / k * 6.283, rr = r * (0.65 + rnd() * 0.5);
+      g.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr * (round ? 1 : 1.1));
+    }
+    g.closePath(); g.fill();
+  }
+  g.globalAlpha = 1;
+  return c;
+}
+
+function makeSpecimen(maxAniso) {
+  const side = new THREE.CanvasTexture(asphaltCanvas(2048, 420, 11));
+  side.wrapS = THREE.RepeatWrapping; side.colorSpace = THREE.SRGBColorSpace; side.anisotropy = maxAniso;
+  const cap = new THREE.CanvasTexture(asphaltCanvas(700, 700, 23, true));
+  cap.colorSpace = THREE.SRGBColorSpace;
+  const mSide = new THREE.MeshStandardMaterial({ map: side, bumpMap: side, bumpScale: 2.2, roughness: 0.62, metalness: 0.05 });
+  const mCap = new THREE.MeshStandardMaterial({ map: cap, bumpMap: cap, bumpScale: 1.6, roughness: 0.7 });
+  // 1 unit = 100 mm: Ø102 mm, h 63.5 mm
+  return new THREE.Mesh(new THREE.CylinderGeometry(0.51, 0.51, 0.635, 96, 1), [mSide, mCap, mCap]);
+}
+
+function lights(scene, rim = 0xe8590c) {
+  scene.add(new THREE.HemisphereLight(0xf2efe8, 0x1c1b19, 0.9));
+  const key = new THREE.DirectionalLight(0xfff4e6, 2.4); key.position.set(2.5, 3, 2.2); scene.add(key);
+  const r = new THREE.DirectionalLight(rim, 1.6); r.position.set(-3, -0.4, -2.4); scene.add(r);
+}
+
+function canWebGL() {
+  try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; }
+}
+
+function fit(renderer, camera, el) {
+  const w = el.clientWidth, h = el.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+
+// Render only while visible.
+function whenVisible(el, cb) {
+  let on = false;
+  new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) cb(); }).observe(el);
+  return () => on;
+}
+
+if (!canWebGL()) {
+  document.getElementById('hero-nogl').style.display = 'flex';
+  document.getElementById('sim3d').innerHTML = '<p style="padding:20px;color:#a9a49a">Sin 3D en este navegador. La curva funciona igual.</p>';
+} else {
+  // ---------- hero specimen ----------
+  const el = document.getElementById('hero');
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  el.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+  camera.position.set(2.3, 1.55, 3.0);
+  lights(scene);
+  const spec = makeSpecimen(renderer.capabilities.getMaxAnisotropy());
+  const group = new THREE.Group(); group.add(spec); scene.add(group);
+  const shadow = new THREE.Mesh(new THREE.CircleGeometry(0.62, 64), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.22 }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = -0.34; scene.add(shadow);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableZoom = false; controls.enablePan = false; controls.enableDamping = true; controls.dampingFactor = 0.08;
+  controls.autoRotate = !reduce; controls.autoRotateSpeed = 0.9; controls.target.set(0, 0, 0);
+  controls.minPolarAngle = 0.35; controls.maxPolarAngle = 1.75;
+
+  fit(renderer, camera, el);
+  addEventListener('resize', () => fit(renderer, camera, el));
+  // one authored entrance: the specimen settles from a tilt
+  group.rotation.set(reduce ? 0 : -0.5, reduce ? 0 : 1.2, 0);
+  const t0 = performance.now();
+  const visible = whenVisible(el, () => requestAnimationFrame(loop));
+  function loop(now) {
+    const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 4);
+    if (!reduce) { group.rotation.x = -0.5 * (1 - e); group.rotation.y = 1.2 * (1 - e); }
+    controls.update(); renderer.render(scene, camera);
+    if (visible()) requestAnimationFrame(loop);
+  }
+
+  // ---------- failure simulator ----------
+  const sEl = document.getElementById('sim3d');
+  const r2 = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  r2.setPixelRatio(Math.min(devicePixelRatio, 2)); r2.toneMapping = THREE.ACESFilmicToneMapping;
+  sEl.appendChild(r2.domElement);
+  const s2 = new THREE.Scene();
+  const cam2 = new THREE.PerspectiveCamera(30, 1, 0.1, 50); cam2.position.set(1.9, 0.7, 3.1);
+  lights(s2);
+  const steel = new THREE.MeshStandardMaterial({ color: 0xa3a8aa, metalness: 0.35, roughness: 0.42 });
+  const specG = new THREE.Group();
+  const sp2 = makeSpecimen(r2.capabilities.getMaxAnisotropy()); sp2.rotation.x = Math.PI / 2; specG.add(sp2); s2.add(specG);
+  const jaw = (a0, a1) => {
+    const sh = new THREE.Shape();
+    sh.absarc(0, 0, 0.64, a0, a1, false); sh.absarc(0, 0, 0.515, a1, a0, true);
+    const g = new THREE.ExtrudeGeometry(sh, { depth: 0.76, bevelEnabled: false, curveSegments: 48 });
+    g.translate(0, 0, -0.38); return new THREE.Mesh(g, steel);
+  };
+  const deg = Math.PI / 180;
+  const upper = jaw(14 * deg, 166 * deg), lower = jaw(194 * deg, 346 * deg);
+  const piston = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.5, 24), steel); piston.position.y = 0.88; upper.add(piston);
+  const rodG = new THREE.CylinderGeometry(0.03, 0.03, 1.7, 16);
+  [-0.78, 0.78].forEach(x => { const r = new THREE.Mesh(rodG, steel); r.position.set(x, 0.1, 0); s2.add(r); });
+  const base = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.08, 0.9), steel); base.position.y = -0.72; s2.add(base);
+  s2.add(upper, lower);
+  const c2 = new OrbitControls(cam2, r2.domElement);
+  c2.enableZoom = false; c2.enablePan = false; c2.enableDamping = true; c2.minPolarAngle = 0.6; c2.maxPolarAngle = 1.9;
+  fit(r2, cam2, sEl); addEventListener('resize', () => fit(r2, cam2, sEl));
+  const vis2 = whenVisible(sEl, () => requestAnimationFrame(loop2));
+  function loop2() { c2.update(); r2.render(s2, cam2); if (vis2()) requestAnimationFrame(loop2); }
+  window.__simDeform = d => { // d in mm, exaggerated x4 for visibility
+    const v = d * 0.04;
+    specG.scale.set(1 + v * 0.35, 1 - v / 1.02, 1);
+    upper.position.y = -v;
+  };
+}
+
+// ---------- load–deformation curve (illustrative, not test data) ----------
+const PMAX = 10, DP = 3.2, XMAX = 6, YMAX = 11;
+const P = d => d <= DP ? PMAX * (3 * (d/DP)**2 - 2 * (d/DP)**3) : PMAX * (1 - 0.35 * ((d - DP) / 2.8) ** 1.5);
+const D0 = DP / 6; // tangent at inflection (d = DP/2) crosses the deformation axis here
+const L = 40, R = 310, Tp = 14, B = 206;
+const X = d => L + d / XMAX * (R - L), Y = p => B - p / YMAX * (B - Tp);
+const svg = n => document.createElementNS('http://www.w3.org/2000/svg', n);
+const axes = document.getElementById('axes');
+axes.innerHTML = `<line x1="${L}" y1="${B}" x2="${R}" y2="${B}" stroke="#4a463f"/><line x1="${L}" y1="${Tp}" x2="${L}" y2="${B}" stroke="#4a463f"/>` +
+  [0,2,4,6].map(d => `<text x="${X(d)}" y="${B+16}" text-anchor="middle">${d}</text>`).join('') +
+  [0,5,10].map(p => `<text x="${L-8}" y="${Y(p)+4}" text-anchor="end">${p}</text>`).join('') +
+  `<text x="${(L+R)/2}" y="236" text-anchor="middle">deformación (mm)</text><text x="12" y="${(Tp+B)/2}" transform="rotate(-90 12 ${(Tp+B)/2})" text-anchor="middle">carga (kN)</text>`;
+const path = upto => { let s = ''; for (let d = 0; d <= upto + 1e-9; d += 0.05) s += (s ? 'L' : 'M') + X(d).toFixed(1) + ' ' + Y(P(d)).toFixed(1); return s; };
+document.getElementById('curveBg').setAttribute('d', path(XMAX));
+const tan = document.getElementById('tan');
+tan.setAttribute('d', `M${X(D0)} ${Y(0)} L${X(D0 + (PMAX*1.06) / (1.5 * PMAX / DP))} ${Y(PMAX*1.06)}`);
+const curve = document.getElementById('curve'), dot = document.getElementById('dot');
+const rLoad = document.getElementById('rLoad'), rDef = document.getElementById('rDef'), rT = document.getElementById('rT');
+const status = document.getElementById('status'), slider = document.getElementById('slider'), play = document.getElementById('play');
+let failed = false;
+function set(d) {
+  curve.setAttribute('d', path(d)); dot.setAttribute('cx', X(d)); dot.setAttribute('cy', Y(P(d)));
+  rLoad.textContent = P(d).toFixed(2) + ' kN'; rDef.textContent = d.toFixed(2) + ' mm'; rT.textContent = (d / 50 * 60).toFixed(1) + ' s';
+  window.__simDeform?.(d);
+  const past = d > DP + 0.05;
+  tan.style.opacity = past ? 1 : 0;
+  if (past && !failed) status.innerHTML = `Falla. Estabilidad <b>${PMAX.toFixed(1)} kN</b>. Flujo por método A <b>${DP.toFixed(2)} mm</b>, por método B <b>${(DP - D0).toFixed(2)} mm</b>. La carga ya está bajando.`;
+  else if (!past) status.textContent = d === 0 ? 'La probeta está montada y el deformímetro en cero.' : 'Cargando. La carga sigue subiendo.';
+  failed = past;
+}
+slider.addEventListener('input', () => { stop(); set(+slider.value); });
+let raf = 0, start = 0, from = 0;
+function stop() { cancelAnimationFrame(raf); raf = 0; play.textContent = 'Cargar'; }
+play.addEventListener('click', () => {
+  if (raf) return stop();
+  from = +slider.value >= XMAX ? 0 : +slider.value; start = performance.now(); play.textContent = 'Pausar';
+  const tick = now => {
+    const d = Math.min(XMAX, from + (now - start) / 60000 * 50); // 50 mm/min, real time
+    slider.value = d; set(d);
+    if (d < XMAX) raf = requestAnimationFrame(tick); else stop();
+  };
+  raf = requestAnimationFrame(tick);
+});
+set(0);
+</script>
+</body>
+</html>
